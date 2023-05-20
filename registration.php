@@ -34,25 +34,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Підготовка та виконання запиту для вставки даних
         print('Before insert');
-            $check_query = "SELECT name from users where emaiil ='$email' or password ='$password'  "
-            $query = "INSERT INTO users (name, email, phone, password) 
-            VALUES ('$name', '$email', '$phone', '$password')";
-            $result = $conn->query($sql);
-            if($result->num_rows > 0){
-                echo 'this User alredy exist';
+        $check_query = "SELECT name from users where email ='$email' or password ='$password'; ";
+        $query = "INSERT INTO users (name, email, phone, password) 
+        VALUES ('$name', '$email', '$phone', '$password');";
+        $result = $conn->query($check_query);
+        if ($result->num_rows > 0) {
+            echo 'this User alredy exist';
+            echo '<script type="text/javascript">';
+            echo '    window.location.href = "index.php";';
+            echo '</script>';
+            die(); // Make sure to exit after the redirect
+        } else {
+            if ($conn->query($query)) {
+                $query = "SELECT id from users 
+                            where name ='$name' 
+                            and email ='$email' 
+                            and phone ='$phone' 
+                            and password ='$password'; ";
+                $result = $conn->query($query);
+                $row = mysqli_fetch_assoc($result);
+
+                echo '<script type="text/javascript">';
+                echo '    localStorage.setItem("authorized",true);';
+                echo '    localStorage.setItem("user_id", ' . $row['id'] . ');';
+                echo '    var name = "' . $name . '";';
+                echo '    var greeting = document.querySelector(".greeting");';
+                echo '    greeting.innerHTML = name;';
+                echo '</script>';
+                echo '<script type="text/javascript">';
+                echo '    window.location.href = "index.php";';
+                echo '</script>';
+                die(); // Make sure to exit after the redirect
+            } else {
+                print('Error was Data insertted');
+                echo 'Error when saved in DB: ' . $conn->error;
             }
-            else{
-                if ($conn->query($query)) {
-                    echo "<div class='greating'>".$name."</div>" ;
-                    header('Location: index.php');
-                    die(); // Make sure to exit after the redirect
-                    echo 'Data successfully inserted in DB.';
-                } else {
-                    print('Error was Data insertted');
-                    echo 'Error when saved in DB: ' . $conn->error;
-                }
-            } 
-            $conn->close();
         }
+        $conn->close();
     }
+}
 ?>

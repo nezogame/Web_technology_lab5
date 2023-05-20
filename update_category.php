@@ -30,14 +30,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
          
         
-        if (isset($_POST['name'])) {
-            $newName = trim(htmlentities($_POST['name']));
-            if(!preg_match("/^([a-zA-Z' ]+)$/",$newName)){
-                $errors['name'] = 'Будьбласка, перевірьте написання вашого імені';
-            }
-        }else{
-            $errors['name'] = 'Будьбласка, введіть ваше ім&rsquo;я';
-        }
+        
+    $newName = trim(htmlentities($newName));
+    if(!preg_match("/^([a-zA-Z' ]+)$/",$newName)){
+        $errors['name'] = 'Будь ласка, перевірьте написання назви';
+    }
+
 
     // If there are no validation errors, update the category in the database
     if (empty($errors)) {
@@ -45,13 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $updateResult = mysqli_query($conn, $updateQuery);
         if ($updateResult) {
             // Redirect to the desired page after successful update
-            header('Location: admin.php');
+            header('Location: admin.php?table=categories');
             exit();
         } else {
             echo 'Error updating category: ' . mysqli_error($conn);
         }
-    }else{
-        print_r ($errors);
     }
 }
 
@@ -59,13 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 mysqli_close($conn);
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles\style.css">
-    <title>Edit Category</title>
-</head>
+<?php include('index_head.php'); ?>
 <body>
     <h2 class ="edit_label">Edit Category</h2>
     <form class ="update_form" method="POST" action="update_category.php?id=<?php echo $category['id']; ?>">
@@ -76,11 +66,12 @@ mysqli_close($conn);
         <?php if (!empty($errors)): ?>
         <ul>
             <?php foreach ($errors as $error): ?>
-                <li><?php echo $error; ?></li>
+                <li class ="validate_error"><?php echo $error; ?></li>
             <?php endforeach; ?>
         </ul>
         <?php endif; ?>
         <button type="submit">Submit</button>
+        <button type="button" onclick="window.location.href='admin.php?table=categories'">Cancel</button>
     </form>
 </body>
 </html>

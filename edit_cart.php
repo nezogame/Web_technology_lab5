@@ -4,7 +4,9 @@ $username = 'root';
 $database = 'green_garden';
 // Fetch and display user data from the database table
 $conn = new mysqli($hostname, $username, 'root', $database);
-$query = "SELECT * FROM cart";
+$query = "SELECT c.id , c.product_id, p.name, c.user_id, c.quantity, c.final_price FROM cart c
+          left join products p
+          on p.id=c.product_id;";
 $result = mysqli_query($conn, $query);
 
 if ($result) {
@@ -13,7 +15,8 @@ if ($result) {
   echo "<thead class='thead-dark'>";
   echo "<tr>";
   echo "<th>ID</th>";		
-  echo "<th>Product_id</th>";
+  echo "<th>Product ID</th>";
+  echo "<th>Product Name</th>";
   echo "<th>User ID</th>";
   echo "<th>Quantity</th>";
   echo "<th>Final Price</th>";
@@ -26,12 +29,13 @@ if ($result) {
     echo "<tr>";
     echo "<td>".$row['id']."</td>";
     echo "<td>".$row['product_id']."</td>";
+    echo "<td>".$row['name']."</td>";
     echo "<td>".$row['user_id']."</td>";
-    echo "<td>".$row['Quantity']."</td>";
-    echo "<td>".$row['Final_price']."</td>";
+    echo "<td>".$row['quantity']."</td>";
+    echo "<td>".$row['final_price']."</td>";
     echo "<td>
-          <a href='update_category.php?id=".$row['id']."'>Edit</a> | 
-          <a href='delete_category.php?id=".$row['id']."'>Delete</a>
+          <a href='update_cart.php?id=".$row['id']."'>Edit</a> | 
+          <a href='delete_cart.php?id=".$row['id']."'>Delete</a>
           </td>";
     echo "</tr>";
   }

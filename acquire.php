@@ -1,15 +1,8 @@
+
+ <!-- header in top of the web site -->
 <?php include('php\header.php'); ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF_8">
-    <meta http_equiv="X_UA_Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device_width, initial_scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles\style.css">
-    <title>Acquire</title>
-</head>
+
 <body>
     <div class="block_title">Контактна інформація</div>
     <form class="contact_form" method = "POST" >
@@ -60,46 +53,46 @@
         if (isset($_POST['name'])) {
             $name = trim(htmlentities($_POST['name']));
             if(!preg_match("/^([a-zA-Z' ]+)$/",$name)){
-                $errors['name'] = 'Будьбласка, перевірьте написання вашого імені';
+                $errors['name'] = 'Будь ласка, перевірьте написання вашого імені';
             }
         }else{
-            $errors['name'] = 'Будьбласка, введіть ваше ім&rsquo;я';
+            $errors['name'] = 'Будь ласка, введіть ваше ім&rsquo;я';
         }
 
         if (isset($_POST['lastname'])) {
             $lastname = rtrim(htmlentities($_POST['lastname']));
             if(!preg_match("/^([a-zA-Z' ]+)$/",$lastname)){
-                $errors['lastname'] = 'Будьбласка, перевірьте написання вашого прізвища';
+                $errors['lastname'] = 'Будь ласка, перевірьте написання вашого прізвища';
             }
         }else{
-            $errors['lastname'] = 'Будьбласка, введіть ваше прізвище';
+            $errors['lastname'] = 'Будь ласка, введіть ваше прізвище';
         }
 
         if (isset($_POST['email'])) {
             $email = ltrim(htmlentities($_POST['email']));
             if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
-                $errors['email'] = 'Будьбласка, перевірьте написання вашого email';
+                $errors['email'] = 'Будь ласка, перевірьте написання вашого email';
             }
         }else {
-            $errors['email'] ='Будьбласка, введіть ваш email';
+            $errors['email'] ='Будь ласка, введіть ваш email';
         }
 
         if (isset($_POST['phone'])) {
             $phone = trim(htmlentities($_POST['phone']));
             if(!preg_match("/^\+\d{1,3}\d{9}$/",$phone)){
-                $errors['phone'] = 'Будьбласка, перевірьте написання вашого телефону';
+                $errors['phone'] = 'Будь ласка, перевірьте написання вашого телефону';
             }
         }else{
-            $errors['phone'] = 'Будьбласка, введіть ваш телефон';
+            $errors['phone'] = 'Будь ласка, введіть ваш телефон';
         }
 
         if (isset($_POST['pname'])) {
             $pname = trim(htmlentities($_POST['pname']));
             if(!preg_match("/^([a-zA-Z' ]+)$/",$pname)){
-                $errors['pname'] = 'Будьбласка, перевірьте написання вашого по батькові';
+                $errors['pname'] = 'Будь ласка, перевірьте написання вашого по батькові';
             }
         }else{
-            $errors['pname'] = 'Будьбласка, введіть ваше по батькові';
+            $errors['pname'] = 'Будь ласка, введіть ваше по батькові';
         }
 
         if(isset($_POST['comment'])){
@@ -123,6 +116,4 @@
         }
     }
     ?>
-     <script src="scripts/reg_validation.js"> </script>  
-</body>
-</html>
+<?php include('php\footer.php'); ?>

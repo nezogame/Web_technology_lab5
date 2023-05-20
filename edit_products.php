@@ -16,6 +16,7 @@ if ($result) {
   echo "<th>Category ID</th>";
   echo "<th>Name</th>";
   echo "<th>Price</th>";
+  echo "<th>Description ID</th>";
   echo "<th>Actions</th>";
   echo "</tr>";
   echo "</thead>";
@@ -27,6 +28,7 @@ if ($result) {
     echo "<td>".$row['category_id']."</td>";
     echo "<td>".$row['name']."</td>";
     echo "<td>".$row['price']."</td>";
+    echo "<td>".$row['description_id']."</td>";
     echo "<td>
           <a href='update_product.php?id=".$row['id']."'>Edit</a> | 
           <a href='delete_product.php?id=".$row['id']."'>Delete</a>

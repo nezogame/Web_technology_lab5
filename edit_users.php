@@ -15,6 +15,7 @@ if ($result) {
   echo "<th>ID</th>";
   echo "<th>Name</th>";
   echo "<th>Email</th>";
+  echo "<th>Phone</th>";
   echo "<th>Actions</th>";
   echo "</tr>";
   echo "</thead>";
@@ -25,8 +26,9 @@ if ($result) {
     echo "<td>".$row['id']."</td>";
     echo "<td>".$row['name']."</td>";
     echo "<td>".$row['email']."</td>";
+    echo "<td>".$row['phone']."</td>";
     echo "<td>
-          <a href='edit_user.php?id=".$row['id']."'>Edit</a> | 
+          <a href='update_user.php?id=".$row['id']."'>Edit</a> | 
           <a href='delete_user.php?id=".$row['id']."'>Delete</a>
           </td>";
     echo "</tr>";

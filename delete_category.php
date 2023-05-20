@@ -26,23 +26,34 @@ if (!$category) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if the delete confirmation is received
     if (isset($_POST['confirm_delete'])) {
-        // Check for foreign key constraints
-        $constraintQuery = "SELECT * FROM products WHERE category_id = $categoryID";
-        $constraintResult = mysqli_query($conn, $constraintQuery);
-        if (mysqli_num_rows($constraintResult) > 0) {
-            echo 'Cannot delete the category. It has foreign key constraints in other tables.';
-            exit;
-        }
+        
+        
 
         // Delete the category from the database
         $deleteQuery = "DELETE FROM categories WHERE id = $categoryID";
+        $deleteResult = "";
+        try{
         $deleteResult = mysqli_query($conn, $deleteQuery);
+        }
+        catch (mysqli_sql_exception $e) {
+            // Handle the exception
+            if ($e) {
+                
+            }
+        }
         if ($deleteResult) {
             // Redirect to the desired page after successful deletion
             header('Location: admin.php?table=categories');
             exit;
         } else {
-            echo 'Error deleting category: ' . mysqli_error($conn);
+            $errorMessage = "Cannot delete the category. It has foreign key constraints in another table.";
+            echo '<script type="text/javascript">';
+            echo 'document.addEventListener("DOMContentLoaded", function() {';
+            echo '    var errorMessage = "' . $errorMessage . '";';
+            echo '    var sqlErrorDiv = document.querySelector(".validate_error");';
+            echo '    sqlErrorDiv.innerHTML = "<ul><li>" + errorMessage + "</li></ul>";';
+            echo '});';
+            echo '</script>';
         }
     } else {
         // User canceled the deletion
@@ -55,19 +66,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 mysqli_close($conn);
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles\style.css">
-    <title>Delete Category</title>
-</head>
+<?php include('index_head.php'); ?>
 <body>
     <h2 class ="edit_label">Delete Category</h2>
     <form class = "delete_form"method="POST" action="delete_category.php?id=<?php echo $category['id']; ?>">
         <p class = "authentication">Are you sure you want to delete the category "<?php echo $category['name']; ?>"?</p>
         <button type="submit" name="confirm_delete" >Delete</button>
         <button type="button" onclick="window.location.href='admin.php?table=categories'">Cancel</button>
+        <div class ="validate_error"></div>
     </form>
 </body>
 </html>

@@ -180,16 +180,6 @@ a.nav-link {
     font-weight: 700;
 }
 
-.greating{
-    margin-top: 5px;
-    text-transform:capitalize;
-    font-family: Rubik-Medium;
-    font-size: 14px;
-    color: #0b3c58;
-    text-align: center;
-    font-weight: 700;
-}
-
 .title {
     text-transform: uppercase;
     font-family: Rubik-Medium;
@@ -263,7 +253,7 @@ a.nav-link {
     align-items: center;
     justify-content: center;
     position:absolute;
-    transform: translate(0%, 55%);
+    transform: translate(0%, 70%);
     cursor: pointer;
     margin-left: 15px;
     margin-right: 15px;
@@ -283,7 +273,7 @@ a.nav-link {
 
 .board > .click_next
 {
-    transform: translate(610%, -190%);
+    transform: translate(610%, -170%);
 }
 
 .board > button:hover{
@@ -310,22 +300,6 @@ a.nav-link {
 .category_name{
     font-style: italic;
     font-size: 19px;
-}
-
-.log_out{
-    align-items: center;
-    justify-content: center;
-    position:absolute;
-    cursor: pointer;
-
-    width: 57px;
-    height: 57px;
-
-    border-radius: 50%;
-    border: 0px ;
-    font-size: 14;
-    background: 0 0;
-    transition: all .2s;
 }
 
 .button_theme{
@@ -362,11 +336,18 @@ a.nav-link {
     transition: all .2s; 
 }
 
+
 .login_heder,
 .registration_heder{
     text-align: center;
     margin-top: 0;
     margin-bottom: 50px;
+  }
+
+  .account_heder{
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 25px;
   }
 
   #login_popup,
@@ -410,11 +391,12 @@ a.nav-link {
     position: relative;
 }
 
-
+.log_out_validation,
 .textarea,
  select{
 font-family: arial;
 width: 100%;
+min-width: 350px;
 margin: 0 0 3px;
 padding: 13px 15px;
 font-size: 20px;
@@ -423,9 +405,28 @@ border-radius: 5px;
 background: #d3d1d1;
 border: 1px solid transparent
 }
+
+
 *::-webkit-input-placeholder {
 opacity: 1;
 color: inherit;
+}
+
+.log_out_validation{
+    color: #ffffff;
+    background-color: #53a545;
+}
+
+.account_form
+.input-row
+.textarea{
+    text-align: center;
+    margin: 3px 0 13px !important;
+    padding: 8px 8px !important;
+}
+
+.log_out_validation{
+    text-align: center;
 }
 
 .login_submit,
@@ -444,6 +445,7 @@ color: inherit;
 .login_submit:hover,
 .submit:hover{ background: #000; }
 
+.account_close_button,
 .log_close_button,
 .close_button {
     position: absolute;
@@ -454,11 +456,12 @@ color: inherit;
     font-weight: bold;
   }
   
-
-  .close_button:hover {
+.log_close_button:hover,
+.close_button:hover {
     color: red;
   }
   
+  .account_popup,
   .login_popup,
   .registration-popup {
     position: fixed;
@@ -474,7 +477,7 @@ color: inherit;
   }
   
 
-
+.account_form,
 .login_form,
 .reg_form{
     display: none;
@@ -485,6 +488,8 @@ color: inherit;
     visibility:hidden;
 }
 
+.account_canel,
+.log_out,
 .sign_in,
 .login{
     padding: 10px 50px;
@@ -502,7 +507,7 @@ color: inherit;
 .sign_in:hover,
 .login:hover{ background: #000000; }
 
-.button_wraper{
+.button_wrapper{
     display: flex;
     justify-content: space-evenly;
     
@@ -539,6 +544,7 @@ color: inherit;
     font-size: 20px;
 }
 
+.catalog_blog
 .container{
     display: flex;
   flex-wrap: wrap;
@@ -560,16 +566,18 @@ color: inherit;
     box-sizing: border-box;
 }
 
-.border{
-    display: inline-block;
+.border {
+    display: flex;
     margin: 0 35px 65px;
     border: 2px solid #eaeaea;
     box-sizing: border-box;
     max-width: 332px;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .tr {
-    display: -ms-flexbox;
+    display: --flexbox;
     display: flex;
     -ms-flex-pack: justify;
     justify-content: space-between;
@@ -616,7 +624,7 @@ color: inherit;
 }
 
 .buy_btn {
-    position: static;
+    /* position: static; */
     width: 100%;
     display: -ms-flexbox;
     display: flex;
@@ -627,11 +635,14 @@ color: inherit;
     min-width: 164px;
     height: 57px;
     font-family: Rubik-Medium;
+    border: none;
     border-top: 1px solid #e5e5e5;
     font-size: 19px;
     color: #53a545;
+    background-color: #fff;
     transition: all 0s;
     cursor: pointer;
+    align-self: flex-end;
 }
 
 .buy_block 
@@ -642,6 +653,7 @@ color: inherit;
     top: -1px;
     right: 0;
     transition: all .2s;
+    
 }
 
 .buy_btn:hover {
@@ -799,6 +811,7 @@ color: inherit;
     color:#061757 ;
 }
 
+.insert_form,
 .delete_form,
 .update_form {
     display: flex;
@@ -811,17 +824,22 @@ color: inherit;
     border-radius: 5px;
   }
   
+
+  .insert_form .insert_field ,
   .update_form .insert_field {
     margin-bottom: 10px;
-    width: auto;
+    width: 250px;
     transform: translate(-25%, 0);
   }
   
+  .insert_form label,
   .update_form label {
     display: block;
     margin-bottom: 5px;
   }
   
+  .select_id,
+  .insert_form input[type="text"] ,
   .update_form input[type="text"] {
     width: 150%;
     padding: 5px;
@@ -829,6 +847,7 @@ color: inherit;
     border-radius: 3px;
   }
   
+  .insert_form button,
   .delete_form button,
   .update_form button {
     width: 100%;
@@ -841,6 +860,7 @@ color: inherit;
     transition: background-color 0.3s ease;
   }
   
+  .insert_form  button:active,
   .delete_form button:active,
   .update_form button:active {
     background-color: grey;
@@ -855,6 +875,93 @@ color: inherit;
     text-align: center;
     margin-bottom: 20px;
   }
-  
 
+  .select_id{
+    background-color: #fff;
+  }
   
+.validate_error{
+    color: red;
+}
+  
+@media (min-width: 1200px){
+    .container, 
+    .container-lg, 
+    .container-md, 
+    .container-sm, 
+    .container-xl 
+    {
+        max-width: 1230px;
+    }
+}
+
+.count {
+    position: absolute;
+    top: -1px;
+    right: -7px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 19px;
+    height: 19px;
+    border-radius: 50%;
+    font-family: Rubik-Medium;
+    font-size: 12px;
+    color: #fff;
+    background-image: linear-gradient(90deg,#f85118,#fb9c3e);
+}
+
+.container
+.page_title {
+    text-transform: uppercase;
+    font-family: Rubik-Medium;
+    font-size: 34px;
+    letter-spacing: 1px;
+    padding: 10px 0 30px;
+}
+
+.order_steps {
+    display: -ms-flexbox;
+    display: flex;
+    padding-top: 6px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.order_steps .order_step {
+    position: relative;
+    width: 33.33%;
+    text-align: center;
+}
+
+.order_page .order_process .order_steps .order_step {
+    position: relative;
+    width: 33.33%;
+    text-align: center;
+}
+
+.order_step .num {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 69px;
+    height: 69px;
+    margin: 0 auto 38px;
+    border-radius: 50%;
+    border: 2px solid #c7c7c7;
+    box-sizing: border-box;
+    font-family: Rubik-Medium;
+    font-size: 34px;
+    color: rgba(0,0,0,.2);
+}
+
+ .order_step .text {
+    font-size: 19px;
+    margin-bottom: 15px;
+}

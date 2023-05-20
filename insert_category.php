@@ -10,8 +10,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Perform validation (customize the validation rules according to your requirements)
     $errors = [];
-    if (empty($newName)) {
-        $errors[] = 'Category name is required.';
+    if (isset($_POST['name'])) {
+        $newName = trim(htmlentities($_POST['name']));
+        if(!preg_match("/^([a-zA-Z' ]+)$/",$newName)){
+            $errors['name'] = 'Будь ласка, перевірьте написання назви';
+        }
     }
 
     // If there are no validation errors, insert the category into the database
@@ -31,26 +34,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles\style.css">
-    <title>Insert Category</title>
-</head>
+<?php include('index_head.php'); ?>
 <body>
-    <h2>Insert Category</h2>
-    <form method="POST" action="insert_category.php">
+    <h2 class = "edit_label">Insert Category</h2>
+    <form class ="insert_form" method="POST" action="insert_category.php">
+    <div class="insert_field">
         <label for="name">Category Name:</label>
         <input type="text" name="name" required>
+    </div >
         <?php if (!empty($errors)): ?>
             <ul>
                 <?php foreach ($errors as $error): ?>
-                    <li><?php echo $error; ?></li>
+                    <li class ="validate_error"><?php echo $error; ?></li>
                 <?php endforeach; ?>
             </ul>
         <?php endif; ?>
         <button type="submit">Submit</button>
+        <button type="button" onclick="window.location.href='admin.php?table=categories'">Cancel</button>
     </form>
 </body>
 </html>

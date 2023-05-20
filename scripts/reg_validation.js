@@ -1,13 +1,15 @@
 const themeButton = document.querySelector(".button_theme");
 
-function changeTheme(){
-  var elements = document.querySelectorAll('*');
-  var randomColor = "#" + Math.floor(Math.random()*16777215).toString(16);
-  document.body.style.background = "GREY";
-  for (var i = 0; i < elements.length; i++) {
-    elements[i].style.color = randomColor;
+  function changeTheme(){
+    var elements = document.querySelectorAll('*');
+    var randomColor = "#" + Math.floor(Math.random()*16777215).toString(16);
+    document.body.style.background = "GREY";
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].style.color = randomColor;
+    }
   }
-}
+
+
 
 themeButton.addEventListener("click", changeTheme);
 
@@ -15,28 +17,35 @@ themeButton.addEventListener("click", changeTheme);
 
 const closeButton = document.querySelector('.close_button');
 const openButton = document.querySelector('.registration_button');
+const closeAccountButton = document.querySelector('.account_close_button');
 
 const closeLogButton = document.querySelector('.log_close_button');
 
 
 const registrationPopup = document.querySelector('.reg_form');
 const loginPopup = document.querySelector('.login_form');
+const accountPopup = document.querySelector('.account_form');
 
-const greating = document.querySelector(".greating");
 
 function close() {
   registrationPopup.style.display = 'none';
 }
 
 function displayForm(){
-  registrationPopup.style.display = "block";
+  if(localStorage.getItem('authorized')){
+    accountPopup.style.display = "block";
+  }else{
+    registrationPopup.style.display = "block";
+  }
 }
 
 closeButton.addEventListener('click', ()=>close());
 closeLogButton.addEventListener('click', ()=>closeLogin());
 openButton.addEventListener('click',()=>displayForm());
+closeAccountButton.addEventListener('click', ()=>closeAccount());
 
-
+var userEmail = document.querySelector(".user_email");
+var greeting = document.querySelector(".greeting");
 
 
 function FormValidation( e ){
@@ -99,6 +108,7 @@ function FormValidation( e ){
       password.style.border = "1px solid #1e8a1e";
     }
     if(isValid===true){
+        localStorage.setItem("authorized",true);
         localStorage.setItem("name",name.value);
         localStorage.setItem("email",email.value);
         localStorage.setItem("phone",phone.value);
@@ -106,6 +116,16 @@ function FormValidation( e ){
         closeRegistration();
     }
 }
+
+
+  document.addEventListener("DOMContentLoaded", function() {
+
+  var greeting = document.querySelector(".greeting");
+  var userEmail = document.querySelector(".user_email");
+  userEmail.textContent = "Your Email: " + localStorage.getItem('email');
+  greeting.textContent = "Hi " + localStorage.getItem('name');
+  });
+
 
 function loginValidation( e ){
   e.preventDefault();
@@ -139,6 +159,8 @@ function loginValidation( e ){
     }
     if(isValid===true){
       closeLogin();
+      localStorage.setItem("authorized",true);
+      userEmail.textContent = 'your Email: '+ email.value;
       document.querySelector(".login_form").submit();
   }
 }
@@ -157,8 +179,22 @@ function closeLogin(){
   loginPopup.style.display = 'none';
 }
 
+function closeAccount(){
+  accountPopup.style.display = 'none';
+}
+
 function closeRegistration(){
   registrationPopup.style.display = 'none';
+}
+
+
+
+function autorization(){
+  if(!localStorage.getItem('authorized')){
+    displayForm();
+    return false;
+  }
+  return true
 }
 
 
@@ -172,5 +208,76 @@ const changeSignOut = document.querySelector(".sign_in");
 changeSignOut.addEventListener("click",()=>swapToRegistration());
 
 
+
 const LogOut = document.querySelector(".log_out");
 LogOut.addEventListener("click",()=>{localStorage.clear()});
+
+const canelAccount = document.querySelector(".account_canel");
+canelAccount.addEventListener("click",()=>closeAccount());
+
+function addCount(){
+  var countElement = document.querySelector(".count");
+  var count = parseInt(countElement.innerText);
+  count++;
+  countElement.innerText = count;
+}
+  
+function subtractCount(){
+  var countElement = document.querySelector(".count");
+  var count = parseInt(countElement.innerText);
+  if (count > 0) {
+    count--;
+    countElement.innerText = count;
+  }
+}
+
+function addToCart(e, productId, target) {
+  e.preventDefault();
+  if (autorization()) {
+    $.ajax({
+      url: "add_to_cart.php",
+      method: "POST",
+      data: {
+        id: productId,
+        name: localStorage.getItem('name'),
+        email: localStorage.getItem('email'),
+        location: target
+      },
+      success: function(response) {
+        // Handle the response from the PHP script
+        addCount();
+        console.log(response);
+      },
+      error: function(xhr, status, error) {
+        // Handle errors
+        console.log(error);
+      }
+    });
+  }
+  
+}
+
+function decrementFromCart(e, productId, target) {
+  e.preventDefault();
+  if (autorization()) {
+    $.ajax({
+      url: "decrement_from_cart.php",
+      method: "POST",
+      data: {
+        id: productId,
+        name: localStorage.getItem('name'),
+        email: localStorage.getItem('email'),
+        location: target
+      },
+      success: function(response) {
+        // Handle the response from the PHP script
+        subtractCount();
+        console.log(response);
+      },
+      error: function(xhr, status, error) {
+        // Handle errors
+        console.log(error);
+      }
+    });
+  }
+}

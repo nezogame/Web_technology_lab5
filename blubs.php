@@ -1,19 +1,11 @@
 <?php include('php\header.php'); ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles\style.css">
-    <title>Bulbs</title>
-</head>
+
 <body>
-    
+
     <div class ="space">
         <ul class ="breadcrumb">
-            <a href="http://localhost/lab4">
+            <a href="http://localhost/lab5">
                 <li>Головна </li>
                 
             </a>
@@ -31,251 +23,71 @@
     <div class ="products_items"> 
         <div class = "catalog_blog">
             <div class ="container">
-                <div class = "border">
-                    <img src="https://ua.s.bekhost.com/uploads/catalog_products/tmp_330/gladiolusy-giganty_1.jpg?1682523905"  alt="Гладіолуси великоквіткові Гіганти, мікс зображення 1" title="Гладіолуси великоквіткові Гіганти, мікс фото 1">
-                    <div class = "product_name">
-                        <a class="name link-product" href="">
-                            Гладіолуси великоквіткові Гіганти, мікс
-                        </a>
-                    </div>
-                    <div class="table_info">
-                        <div class="tr">
-                            <div class="td"><span>Глибина посадки</span></div>
-                            <div class="td">7 - 10 см</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Особливості</span></div>
-                            <div class="td">справжні гіганти саду</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Висота рослини</span></div>
-                            <div class="td">90 - 120 см</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Місце посадки</span></div>
-                            <div class="td">сонячне місце</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Морозостійкість</span></div>
-                            <div class="td">мінус 12°C</div>
-                        </div>
-                    </div>
-                    <div class="buy_btn" data-limit_text="Вже куплений" data-limit_text_off="Ви вже купили акційний товар">
-                        Купити
-                    </div>
-                </div>
-                <div class = "border">
-                    <img src="https://ua.s.bekhost.com/uploads/catalog_products/tmp_330/mega-ekonomiya-gladiolus-blek-djek_1.jpg?1682523905"  alt="Гладіолуси великоквіткові Гіганти, мікс зображення 1" title="Гладіолуси великоквіткові Гіганти, мікс фото 1">
-                    <div class = "product_name">
-                        <a class="name link-product" href="">
-                        Гладіолус великоквітковий Блек Джек, цибулини
-                        </a>
-                    </div>
 
-                    <div class="table_info">
-                        <div class="tr">
-                            <div class="td"><span>Глибина посадки</span></div>
-                            <div class="td">7 - 10 см</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Особливості</span></div>
-                            <div class="td">найтемніший</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Висота рослини</span></div>
-                            <div class="td">80 - 100 см</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Місце посадки</span></div>
-                            <div class="td">сонячне місце</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Морозостійкість</span></div>
-                            <div class="td">мінус 12°C</div>
-                        </div>
-                    </div>
-                    <div class="buy_btn" data-limit_text="Вже куплений" data-limit_text_off="Ви вже купили акційний товар">
-                        Купити
-                    </div>
-                </div>
-                <div class = "border">
-                    <img src="https://ua.s.bekhost.com/uploads/catalog_products/tmp_330/liliya-miss-feya_1.jpg?1682523906"  alt="Гладіолуси великоквіткові Гіганти, мікс зображення 1" title="Гладіолуси великоквіткові Гіганти, мікс фото 1">
+                <?php
+                    $hostname = '127.0.0.1';
+                    $username = 'root';
+                    $database = 'green_garden';
+                    // Fetch and display user data from the database table
+                    $conn = new mysqli($hostname, $username, 'root', $database);
+                    $query = "SELECT p.id,p_d.img, p.name, p_d.planting_depth, p_d.features, p_d.plant_height, p_d.place_of_landing, p_d.frost_resistance, p.price  
+                                        FROM product_description p_d
+                                        RIGHT JOIN products p
+                                        on p_d.id = p.description_id
+                                        where p.category_id =  1;";
+                    $result = mysqli_query($conn, $query);
                     
-                    <div class = "product_name">
-                        <a class="name link-product" href="">
-                        Лілія тигрова Міс Фея
-                        </a>
-                    </div>
-                    
-                    <div class="table_info">
-                        <div class="tr">
-                            <div class="td"><span>Глибина посадки</span></div>
-                            <div class="td">10 - 15 см</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Особливості</span></div>
-                            <div class="td">яскрава з таємничими квітками</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Висота рослини</span></div>
-                            <div class="td">100 - 120 см</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Місце посадки</span></div>
-                            <div class="td">сонячне місце</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Морозостійкість</span></div>
-                            <div class="td">мінус 35°C</div>
-                        </div>
-                    </div>
-                    <div class="buy_btn" data-limit_text="Вже куплений" data-limit_text_off="Ви вже купили акційний товар">
-                        Купити
-                    </div>
-                </div>
-                <div class = "border">
-                    <img src="https://ua.s.bekhost.com/uploads/catalog_products/tmp_330/georgina-dekorativnaya-daliya-arabian-nayt_1.jpg?1682523906"  alt="Гладіолуси великоквіткові Гіганти, мікс зображення 1" title="Гладіолуси великоквіткові Гіганти, мікс фото 1">
+                    foreach ($result as $product) {
+                        // Extract the necessary information
+                        $product_id = $product['id'];
+                        $product_name = $product['name'];
+                        $img_url = $product['img'];
+                        $planting_depth = $product['planting_depth'];
+                        $features = $product['features'];
+                        $plant_height = $product['plant_height'];
+                        $place_of_landing = $product['place_of_landing'];
+                        $frost_resistance = $product['frost_resistance'];
+                        $price = $product['price'];
 
-                    <div class = "product_name">
-                        <a class="name link-product" href="">
-                        Жоржина Арабіан Найт
-                        </a>
-                    </div>
-                    
-                    <div class="table_info">
-                        <div class="tr">
-                            <div class="td"><span>Глибина посадки</span></div>
-                            <div class="td">10 - 15 см</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Особливості</span></div>
-                            <div class="td">предмет захоплення і гордості</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Висота рослини</span></div>
-                            <div class="td">80 - 100 см</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Місце посадки</span></div>
-                            <div class="td">сонце, півтінь</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Морозостійкість</span></div>
-                            <div class="td">відсутня</div>
-                        </div>
-                    </div>
-                    <div class="buy_btn" data-limit_text="Вже куплений" data-limit_text_off="Ви вже купили акційний товар">
-                        Купити
-                    </div>
-                </div>
-                <div class = "border">
-                    <img src="https://ua.s.bekhost.com/uploads/catalog_products/tmp_330/krokosmiya-smes-okrasok_1.jpg?1682523905"  alt="Гладіолуси великоквіткові Гіганти, мікс зображення 1" title="Гладіолуси великоквіткові Гіганти, мікс фото 1">
-                    
-                    <div class = "product_name">
-                        <a class="name link-product" href="">
-                        Крокосмія, мікс
-                        </a>
-                    </div>
-                    
-                    <div class="table_info">
-                        <div class="tr">
-                            <div class="td"><span>Глибина посадки</span></div>
-                            <div class="td">7 - 10 см</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Особливості</span></div>
-                            <div class="td">здалека привертають увагу</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Висота рослини</span></div>
-                            <div class="td">40 - 50 см</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Місце посадки</span></div>
-                            <div class="td">сонце, півтінь</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Морозостійкість</span></div>
-                            <div class="td">мінус 35°C</div>
-                        </div>
-                    </div>
-                    <div class="buy_btn" data-limit_text="Вже куплений" data-limit_text_off="Ви вже купили акційний товар">
-                        Купити
-                    </div>
-                </div>
-                <div class = "border">
-                    <img src="https://ua.s.bekhost.com/uploads/catalog_products/tmp_330/gladiolus-gofrirovannyy-broken-hart-frizzl_1.jpg?1682523905"  alt="Гладіолуси великоквіткові Гіганти, мікс зображення 1" title="Гладіолуси великоквіткові Гіганти, мікс фото 1">
-                    
-                    <div class = "product_name">
-                        <a class="name link-product" href="">
-                        Гладіолус гофрований Брокен Харт Фріззл
-                        </a>
-                    </div>
-                    
-                    <div class="table_info">
-                        <div class="tr">
-                            <div class="td"><span>Глибина посадки</span></div>
-                            <div class="td">7 - 10 см</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Особливості</span></div>
-                            <div class="td">точно розіб'є Ваше серце</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Висота рослини</span></div>
-                            <div class="td">100 - 120 см</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Місце посадки</span></div>
-                            <div class="td">сонячне місце</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Морозостійкість</span></div>
-                            <div class="td">мінус 12°C</div>
-                        </div>
-                    </div>
-                    <div class="buy_btn" data-limit_text="Вже куплений" data-limit_text_off="Ви вже купили акційний товар">
-                        Купити
-                    </div>
-                </div>
-                <div class = "border">
-                    <img src="https://ua.s.bekhost.com/uploads/catalog_products/tmp_330/georgina-penni-leyn_1.jpg?1682523906"  alt="Гладіолуси великоквіткові Гіганти, мікс зображення 1" title="Гладіолуси великоквіткові Гіганти, мікс фото 1">
-                    
-                    <div class = "product_name">
-                        <a class="name link-product" href="">
-                        Жоржина Пенні Лейн
-                        </a>
-                    </div>
-                    
-                    <div class="table_info">
-                        <div class="tr">
-                            <div class="td"><span>Глибина посадки</span></div>
-                            <div class="td">5 - 10 см</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Особливості</span></div>
-                            <div class="td">кожен буде вражений її красою</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Висота рослини</span></div>
-                            <div class="td">80 - 100 см</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Місце посадки</span></div>
-                            <div class="td">сонце, півтінь</div>
-                        </div>
-                        <div class="tr">
-                            <div class="td"><span>Морозостійкість</span></div>
-                            <div class="td">відсутня</div>
-                        </div>
-                    </div>
-                    <div class="buy_btn" data-limit_text="Вже куплений" data-limit_text_off="Ви вже купили акційний товар">
-                        Купити
-                    </div>
-                </div>
+                        // Output the HTML structure for each product
+                        echo '<form class="border" onsubmit="addToCart(event,'.$product_id.', \'blubs.php\')">';
+                            echo '<img src="' . $img_url . '" alt="' . $product_name . '" title="' . $product_name . '">';
+                            echo '<div class="product_name">';
+                                echo '<a class="name link-product" href="">' . $product_name . '</a>';
+                            echo '</div>';
+                            echo '<div class="table_info">';
+                                echo '<div class="tr">';
+                                    echo '<div class="td"><span>Глибина посадки</span></div>';
+                                    echo '<div class="td">' . $planting_depth . '</div>';
+                                echo '</div>';
+                                echo '<div class="tr">';
+                                    echo '<div class="td"><span>Особливості</span></div>';
+                                    echo '<div class="td">' . $features . '</div>';
+                                echo '</div>';
+                                echo '<div class="tr">';
+                                    echo '<div class="td"><span>Висота рослини</span></div>';
+                                    echo '<div class="td">' . $plant_height . '</div>';
+                                echo '</div>';
+                                echo '<div class="tr">';
+                                    echo '<div class="td"><span>Місце посадки</span></div>';
+                                    echo '<div class="td">' . $place_of_landing . '</div>';
+                                echo '</div>';
+                                echo '<div class="tr">';
+                                    echo '<div class="td"><span>Морозостійкість</span></div>';
+                                    echo '<div class="td">' . $frost_resistance . '</div>';
+                                echo '</div>';
+                                echo '<div class="tr">';
+                                    echo '<div class="td"><span>Ціна</span></div>';
+                                    echo '<div class="td">' .$price.'&#8372;</div>';
+                                    echo '</div>';
+                            echo '</div>';
+                            echo '<button type="submit" class="buy_btn" data-limit_text="Вже куплений" data-limit_text_off="Ви вже купили акційний товар" >';
+                                echo 'Купити';
+                            echo '</button>';
+                        echo '</form>';
+                    }
+                ?>
             </div>
         </div>
     </div> 
-    <script src="scripts/reg_validation.js"> </script>  
-</body>
-</html>
+    <?php include('php\footer.php'); ?>
