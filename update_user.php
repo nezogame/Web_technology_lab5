@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $newName = $_POST['name'];
     $newEmail = $_POST['email'];
     $newPhone = $_POST['phone'];
+    $newPassword = $_POST['password'];
    
         
         
@@ -39,14 +40,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if(!preg_match("/^[A-Za-z0-9\s\.,\-]+$/",$newName)){
             $errors['name'] = 'Будь ласка, перевірьте написання імені';
         }
-        if(!preg_match("/^[A-Za-z0-9\s\.,\-]+$/",$newName)){
-            $errors['name'] = 'Будь ласка, перевірьте написання імені';
+        if(!preg_match("/^[^\s@]+@[^\s@]+\.[^\s@]+$/",$newEmail)){
+            $errors['email'] = 'Будь ласка, перевірьте написання емейлу';
         }
-        if(!preg_match("/^[A-Za-z0-9\s\.,\-]+$/",$newName)){
-            $errors['name'] = 'Будь ласка, перевірьте написання імені';
+        if(!preg_match("/^\+\d{1,3}\d{9}$/",$newPhone)){
+            $errors['phone'] = 'Будь ласка, перевірьте написання телефону';
         }
-        if(!preg_match("/^[A-Za-z0-9\s\.,\-]+$/",$newName)){
-            $errors['name'] = 'Будь ласка, перевірьте написання імені';
+        if(!empty($newPassword) && !preg_match("/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/",$newPassword)){
+            $errors['name'] = 'Будь ласка, перевірьте написання паролю, він повинен містити мініму 1 цифру та спец символ';
         }
 
         
@@ -54,15 +55,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // If there are no validation errors, update the user in the database
     if (empty($errors)) {
-        $updateQuery = "UPDATE user 
-                        SET user_id = '$newUserId', 
-                            name = '$newName',
-                            price = '$newPrice',
-                        WHERE id = $userID";
+        $updateQuery ="";
+        if(empty($newPassword)){
+            $updateQuery = "UPDATE users 
+            SET  
+                name = '$newName',
+                email = '$newEmail',
+                phone = '$newPhone'
+            WHERE id = $userID";
+        }else{
+            $updateQuery = "UPDATE users
+            SET  
+                name = '$newName',
+                email = '$newEmail',
+                phone = '$newPhone',
+                password = '$newPassword'
+            WHERE id = $userID";
+        }
         $updateResult = mysqli_query($conn, $updateQuery);
         if ($updateResult) {
             // Redirect to the desired page after successful update
-            header('Location: admin.php');
+            header('Location: admin.php?table=users');
             exit();
         } else {
             echo 'Error updating user: ' . mysqli_error($conn);
@@ -111,7 +124,7 @@ mysqli_close($conn);
     </div>
     <div class="insert_field">
         <label for="password">User Password:</label>
-        <input type="text" name="password" value="" required>
+        <input type="text" name="password" value="" >
     </div>
         <?php if (!empty($errors)): ?>
             <ul>

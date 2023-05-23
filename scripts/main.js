@@ -20,11 +20,11 @@ var images = [
 ];
 
 var links = [
-  "lab4/fruity.php",
-  "lab4/сonifers.php",
-  "lab4/blubs.php",
-  "lab4/annual.php",
-  "lab4/perennial.php"
+  "lab5/fruity.php",
+  "lab5/сonifers.php",
+  "lab5/blubs.php",
+  "lab5/annual.php",
+  "lab5/perennial.php"
 ]
 
 

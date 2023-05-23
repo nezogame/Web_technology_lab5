@@ -1,5 +1,8 @@
-<?php include('php\header.php'); ?>
-<?php
+<?php 
+
+ob_start(); // Start output buffering
+
+include('php\header.php'); 
 $hostname = '127.0.0.1';
 $username = 'root';
 $database = 'green_garden';
@@ -21,12 +24,12 @@ if ($result->num_rows > 0) {
     $name = $row['name'];
     $email = $row['email'];
 
-
+    setcookie('authorized', true, time() + (86400 * 30), '/'); // Cookie will expire in 30 days
+    setcookie('email', $email, time() + (86400 * 30), '/'); // Cookie will expire in 30 days
+    setcookie('name', $name, time() + (86400 * 30), '/'); // Cookie will expire in 30 days
+    setcookie('user_id',  $row['id'], time() + (86400 * 30), '/'); // Cookie will expire in 30 days
+    
     echo '<script type="text/javascript">';   
-    echo '    localStorage.setItem("authorized", true);';
-    echo '    localStorage.setItem("user_id", ' . $row['id'] . ');';
-    echo '    localStorage.setItem("email", "' . $email . '");';
-    echo '    localStorage.setItem("name", "' . $name . '");';
     echo '            window.location.href = "index.php";';
     echo '</script>';
     die();

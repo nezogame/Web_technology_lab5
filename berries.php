@@ -10,12 +10,12 @@
                 
             </a>
             <a href="">
-                <li>Цибулини</li>
+                <li>Ягідні</li>
                 
             </a>
         </ul>
     </div>
-    <h1 class="page_title">Цибулинни квітів на весну 2023</h1>
+    <h1 class="page_title">Саджанці ягідних рослин</h1>
     <div class ="products_items"> 
         <div class = "catalog_blog">
             <div class ="container">
@@ -30,7 +30,7 @@
                                         FROM product_description p_d
                                         RIGHT JOIN products p
                                         on p_d.id = p.description_id
-                                        where p.category_id =  1;";
+                                        where p.category_id =  4;";
                     $result = mysqli_query($conn, $query);
                     
                     foreach ($result as $product) {
@@ -46,7 +46,7 @@
                         $price = $product['price'];
 
                         // Output the HTML structure for each product
-                        echo '<form class="border" onsubmit="addToCart(event,'.$product_id.', \'blubs.php\')">';
+                        echo '<form class="border" onsubmit="addToCart(event,'.$product_id.', \'berries.php\')">';
                             echo '<img src="' . $img_url . '" alt="' . $product_name . '" title="' . $product_name . '">';
                             echo '<div class="product_name">';
                                 echo '<a class="name link-product" href="">' . $product_name . '</a>';

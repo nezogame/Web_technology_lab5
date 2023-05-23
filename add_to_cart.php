@@ -3,14 +3,14 @@ $hostname = '127.0.0.1';
 $username = 'root';
 $database = 'green_garden';
 
-$productID = trim(htmlentities($_GET['id']));
-$name =  trim(htmlentities($_GET['name']));
-$email =  trim(htmlentities($_GET['email']));
-$location =trim(htmlentities($_GET['location']));
+$productID = trim(htmlentities($_POST['id']));
+$name =  trim(htmlentities($_POST['name']));
+$email =  trim(htmlentities($_POST['email']));
+$location =trim(htmlentities($_POST['location']));
 $errors = array();
 
 // Check if the product ID is provided
-if (!isset($_GET['id'])) {
+if (!isset($_POST['id'])) {
     $errors['id'] = 'Product ID not provided';
     exit;
 }
@@ -60,9 +60,12 @@ if ($result->num_rows > 0) {
         echo 'Error updating product: ' . mysqli_error($conn);
     }  
 } else {
+    $quary = "SELECT price from products where id = ".$productID.";";
+    $result = mysqli_query($conn, $quary);
+    $price = mysqli_fetch_assoc($result);
     $insertQuery = "INSERT into cart      
-                        (quantity, user_id,product_id)
-                        values (1, ". $row['id'] .",".$productID.");";
+                        (quantity, user_id,product_id,final_price)
+                        values (1, ". $row['id'] .",".$productID.",".$price['price'].");";
     $result = mysqli_query($conn, $insertQuery);
     if ($result) {
         // Redirect to the desired page after successful update

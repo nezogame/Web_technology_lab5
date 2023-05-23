@@ -1,3 +1,5 @@
+
+
 const themeButton = document.querySelector(".button_theme");
 
   function changeTheme(){
@@ -32,7 +34,7 @@ function close() {
 }
 
 function displayForm(){
-  if(localStorage.getItem('authorized')){
+  if(getCookie('authorized')){
     accountPopup.style.display = "block";
   }else{
     registrationPopup.style.display = "block";
@@ -118,12 +120,34 @@ function FormValidation( e ){
 }
 
 
+// Retrieve cookies in JavaScript
+function getCookie(cookieName) {
+  // Split the cookie string into individual cookies
+  var cookies = document.cookie.split(';');
+
+  // Iterate over the cookies to find the desired cookie
+  for (var i = 0; i < cookies.length; i++) {
+    var cookie = cookies[i].trim();
+
+    // Check if the cookie name matches
+    if (cookie.startsWith(cookieName + '=')) {
+      // Extract and decode the cookie value
+      var cookieValue = cookie.substring(cookieName.length + 1);
+      return decodeURIComponent(cookieValue);
+    }
+  }
+
+  // Return null if the cookie is not found
+  return null;
+}
+
+
   document.addEventListener("DOMContentLoaded", function() {
 
   var greeting = document.querySelector(".greeting");
   var userEmail = document.querySelector(".user_email");
-  userEmail.textContent = "Your Email: " + localStorage.getItem('email');
-  greeting.textContent = "Hi " + localStorage.getItem('name');
+  userEmail.textContent = "Your Email: " + getCookie('email');
+  greeting.textContent = "Hi " + getCookie('name');
   });
 
 
@@ -158,6 +182,9 @@ function loginValidation( e ){
       password.style.border = "1px solid #1e8a1e";
     }
     if(isValid===true){
+      if(email === "admin@a.com"&& password === "admin"){
+
+      }
       closeLogin();
       localStorage.setItem("authorized",true);
       userEmail.textContent = 'your Email: '+ email.value;
@@ -172,7 +199,7 @@ function swapToLogin(){
 
 function swapToRegistration(){
   loginPopup.style.display = 'none';
-  registrationPopup.style.display = "block";
+  rauthorizedDOMegistrationPopup.style.display = "block";
 }
 
 function closeLogin(){
@@ -190,7 +217,7 @@ function closeRegistration(){
 
 
 function autorization(){
-  if(!localStorage.getItem('authorized')){
+  if(!getCookie('authorized')){
     displayForm();
     return false;
   }
@@ -209,9 +236,22 @@ changeSignOut.addEventListener("click",()=>swapToRegistration());
 
 
 
-const LogOut = document.querySelector(".log_out");
-LogOut.addEventListener("click",()=>{localStorage.clear()});
+const logoutButton = document.querySelector(".log_out");
+logoutButton.addEventListener("click", () => {
+  // Split the cookies by semicolon to get individual cookie strings
+  const cookies = document.cookie.split(";");
 
+  // Loop through each cookie and set its expiration to a past date
+  for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i];
+    const eqPos = cookie.indexOf("=");
+    const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+  }
+
+  // Redirect or perform any other actions after clearing the cookies
+  window.location.href = "index.php";
+});
 const canelAccount = document.querySelector(".account_canel");
 canelAccount.addEventListener("click",()=>closeAccount());
 
@@ -220,6 +260,22 @@ function addCount(){
   var count = parseInt(countElement.innerText);
   count++;
   countElement.innerText = count;
+}
+
+function addQuantity(id){
+  let quantityElement = document.getElementById("quantity_"+id);
+  let priceElement  = document.getElementById("price_"+id);
+  let sumElement  = document.getElementById("final_price_"+id);
+  let totalPriceElement = document.querySelector(".total_price");
+
+  let totalPrice = parseInt(totalPriceElement.innerText*100);
+  let price =parseInt(priceElement.innerText*100);
+  let count = parseInt(quantityElement.value);
+  count++;
+  
+  quantityElement.value = count;
+  sumElement.innerText = price*count/100 +' ';
+  totalPriceElement.innerText = (totalPrice + price)/100 +' ';
 }
   
 function subtractCount(){
@@ -231,20 +287,40 @@ function subtractCount(){
   }
 }
 
+function subtractQuantity(id){
+  let quantityElement  = document.getElementById("quantity_"+id);
+  let priceElement  = document.getElementById("price_"+id);
+  let sumElement  = document.getElementById("final_price_"+id);
+  let totalPriceElement = document.querySelector(".total_price");
+
+  let totalPrice = parseInt(totalPriceElement.innerText*100);
+  let price =parseInt(priceElement.innerText*100);
+  let count = parseInt(quantityElement.value);
+  if (count > 0) {
+    count--;
+    quantityElement.value = count;
+    sumElement.innerText = price*count/100 +' ';
+    totalPriceElement.innerText = (totalPrice-price)/100 +' ';
+  }
+}
+
 function addToCart(e, productId, target) {
   e.preventDefault();
+  
   if (autorization()) {
     $.ajax({
       url: "add_to_cart.php",
       method: "POST",
       data: {
         id: productId,
-        name: localStorage.getItem('name'),
-        email: localStorage.getItem('email'),
+        name: getCookie('name'),
+        email: getCookie('email'),
         location: target
       },
       success: function(response) {
-        // Handle the response from the PHP script
+        if(target==='cart.php'){
+          addQuantity(productId);
+        }
         addCount();
         console.log(response);
       },
@@ -259,19 +335,305 @@ function addToCart(e, productId, target) {
 
 function decrementFromCart(e, productId, target) {
   e.preventDefault();
+  
   if (autorization()) {
     $.ajax({
       url: "decrement_from_cart.php",
       method: "POST",
       data: {
         id: productId,
-        name: localStorage.getItem('name'),
-        email: localStorage.getItem('email'),
+        name: getCookie('name'),
+        email: getCookie('email'),
         location: target
       },
       success: function(response) {
-        // Handle the response from the PHP script
-        subtractCount();
+        if(target==='cart.php'){
+          subtractQuantity(productId);
+        }
+        subtractCount(productId);
+        console.log(response);
+      },
+      error: function(xhr, status, error) {
+        // Handle errors
+        console.log(error);
+      }
+    });
+  }
+}
+
+
+
+
+const orderSteps = document.querySelectorAll('.order-step');
+const orderStepBoxs = document.getElementsByClassName("order_step");
+
+function addCheckedClass(orderStepIndex) {
+  // Remove the "checked" class from all order steps
+
+  for (var i = 0; i < orderStepBoxs.length; i++) {
+    orderStepBoxs[i].classList.remove("checked");
+  }
+  
+  // Add the "checked" class to the order step with the specified index
+  var orderStep = document.querySelector('[data-order-step="' + orderStepIndex + '"]');
+  if (orderStep) {
+    orderStep.classList.add("checked");
+  }
+}
+addCheckedClass(1);
+
+  function displayFormAt(step){
+    window.event
+          // Hide all order steps except the first one
+          for (let i = 0; i < orderSteps.length; i++) {
+              orderSteps[i].style.display = 'none';
+          }
+          const current= document.querySelector('.order-step[data-order-step="'+step+'"]');
+          if(current){
+          current.style.display = 'block';
+          addCheckedClass(step);
+           }
+    }
+    displayFormAt(1); 
+function validateEmail(email) {
+  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+function validateName(name){
+  var nameRegex = /^([a-zA-Z' ]+)$/;
+  return nameRegex.test(name);
+}
+
+function validateLastName(lastName) {
+  var lastNameRegex = /^([a-zA-Z' ]+)$/;
+  return lastNameRegex.test(lastName);
+}
+
+function validatePname(pname) {
+  var pnameRegex = /^([a-zA-Z' ]+)$/;
+  return pnameRegex.test(pname);
+}
+
+function validatePhone(phone) {
+  var phoneRegex = /^\+\d{1,3}\d{9}$/;
+  return phoneRegex.test(phone);
+}
+
+function validateCardNumber(cardNumber) {
+  var cardNumberRegex = /^\d{4}-\d{4}-\d{4}-\d{4}$/;
+  return cardNumberRegex.test(cardNumber);
+}
+
+function validateCVV(CVV) {
+  var CVVRegex = /^\d{3}$/;
+  return CVVRegex.test(CVV);
+}
+
+function validateCardDate(cardDate) {
+  var cardDateRegex = /^(0[1-9]|1[0-2])\/[0-9]{2}$/;
+  return cardDateRegex.test(cardDate);
+}
+
+
+function displayErrors(errors,id) {
+  var errorContainer = document.getElementById('error-messages-'+id);
+  errorContainer.innerHTML = ''; // Очистить контейнер от предыдущих сообщений об ошибках
+
+  if (Object.keys(errors).length > 0) {
+    var ul = document.createElement('ul');
+
+    for (var field in errors) {
+      if (errors.hasOwnProperty(field)) {
+        var li = document.createElement('li');
+        li.className = 'validate_error';
+        li.textContent = errors[field];
+        ul.appendChild(li);
+      }
+    }
+
+    errorContainer.appendChild(ul);
+  }
+}
+
+    
+function confirmPurchaseInfo(e) {
+  e.preventDefault();
+  var errors = {};
+
+  var cardNumberInput = document.querySelector('input[name="card_number"]');
+  var cardNumber = cardNumberInput.value.trim();
+  if (!cardNumber) {
+    cardNumberInput.style.border = "1px solid #f70f0f";
+    errors['card_number'] = 'Будь ласка, введіть ваш номер банківської картки';
+  } else if (!validateCardNumber(cardNumber)) {
+    cardNumberInput.style.border = "1px solid #f70f0f";
+    errors['card_number'] = 'Будь ласка, перевірьте написання вашого номеру банківської картки';
+  }else{
+    cardNumberInput.style.border = "1px solid #1e8a1e";
+  }
+
+  var CVVInput = document.querySelector('input[name="CVV"]');
+  var CVV = CVVInput.value.trim();
+  if (!CVV) {
+    CVVInput.style.border = "1px solid #f70f0f";
+    errors['CVV'] = 'Будь ласка, введіть ваш CVV код';
+  } else if (!validateCVV(CVV)) {
+    CVVInput.style.border = "1px solid #f70f0f";
+    errors['CVV'] = 'Будь ласка, перевірьте написання вашого CVV коду';
+  }else{
+    CVVInput.style.border = "1px solid #1e8a1e";
+  }
+
+  var cardDateInput = document.querySelector('input[name="card_date"]');
+  var cardDate = cardDateInput.value.trim();
+  if (!cardDate) {
+    cardDateInput.style.border = "1px solid #f70f0f";
+    errors['card_date'] = 'Будь ласка, введіть дату вашої картки';
+  } else if (!validateCardDate(cardDate)) {
+    cardDateInput.style.border = "1px solid #f70f0f";
+    errors['card_date'] = 'Будь ласка, перевірьте написання дати вашої картки';
+  }else{
+    cardDateInput.style.border = "1px solid #1e8a1e";
+  }
+
+  if (Object.keys(errors).length > 0) {
+    displayErrors(errors);
+  }else{
+    $.ajax({
+      url: "move_to_order.php",
+      method: "POST",
+      data: {
+        id: getCookie('user_id'),
+      },
+      success: function(response) {
+        
+        console.log(response);
+        if (response.trim() === '') {
+          window.location.href = 'index.php';
+      }
+      },
+      error: function(xhr, status, error) {
+        // Handle errors
+        console.log(error);
+      }
+    });
+  }
+}
+
+function validateContactInfo(e) {
+  e.preventDefault();
+  var errors = {};
+
+  var nameInput = document.querySelector('input[name="cont_name"]');
+var name = nameInput.value.trim();
+
+if (!name) {
+  nameInput.style.border = "1px solid #f70f0f";
+  errors['name'] = 'Будь ласка, введіть ваше ім’я';
+} else if (!validateName(name)) {
+  nameInput.style.border = "1px solid #f70f0f";
+  errors['name'] = 'Будь ласка, перевірьте написання вашого імені';
+} else {
+  nameInput.style.border = "1px solid #1e8a1e";
+}
+
+var lastnameInput = document.querySelector('input[name="fname"]');
+var lastname = lastnameInput.value.trim();
+
+if (!lastname) {
+  lastnameInput.style.border = "1px solid #f70f0f";
+  errors['lastName'] = 'Будь ласка, введіть ваше прізвище';
+} else if (!validateLastName(lastname)) {
+  lastnameInput.style.border = "1px solid #f70f0f";
+  errors['lastName'] = 'Будь ласка, перевірьте написання вашого прізвища';
+} else {
+  lastnameInput.style.border = "1px solid #1e8a1e";
+}
+
+var emailInput = document.querySelector('input[name="cont_email"]');
+var email = emailInput.value.trim();
+
+if (!email) {
+  emailInput.style.border = "1px solid #f70f0f";
+  errors['email'] = 'Будь ласка, введіть ваш email';
+} else if (!validateEmail(email)) {
+  emailInput.style.border = "1px solid #f70f0f";
+  errors['email'] = 'Будь ласка, перевірьте написання вашого email';
+} else {
+  emailInput.style.border = "1px solid #1e8a1e";
+}
+
+var phoneInput = document.querySelector('input[name="cont_phone"]');
+var phone = phoneInput.value.trim();
+
+if (!phone) {
+  phoneInput.style.border = "1px solid #f70f0f";
+  errors['phone'] = 'Будь ласка, введіть ваш телефон';
+} else if (!validatePhone(phone)) {
+  phoneInput.style.border = "1px solid #f70f0f";
+  errors['phone'] = 'Будь ласка, перевірьте написання вашого телефону';
+} else {
+  phoneInput.style.border = "1px solid #1e8a1e";
+}
+
+var pnameInput = document.querySelector('input[name="pname"]');
+var pname = pnameInput.value.trim();
+
+if (!pname) {
+  pnameInput.style.border = "1px solid #f70f0f";
+  errors['pname'] = 'Будь ласка, введіть ваше по батькові';
+} else if (!validatePname(pname)) {
+  pnameInput.style.border = "1px solid #f70f0f";
+  errors['pname'] = 'Будь ласка, перевірьте написання вашого по батькові';
+} else {
+  pnameInput.style.border = "1px solid #1e8a1e";
+}
+
+  if (Object.keys(errors).length > 0) {
+    displayErrors(errors,2);
+  }else{
+    displayFormAt(3);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  if(getCookie('user_id')==1){
+    adminPanel();
+  }
+});
+
+function adminPanel() {
+  var li = document.createElement('li');
+
+  // Create the new <a> element
+  var a = document.createElement('a');
+  a.className = 'nav-link';
+  a.href = 'admin.php';
+  a.textContent = 'Адмін';
+
+  // Append the <a> element to the <li> element
+  li.appendChild(a);
+
+  // Find the <ul> element with the class "horizontal-list"
+  var ul = document.querySelector('.horizontal-list');
+
+  // Append the new <li> element to the <ul> element
+  ul.appendChild(li);
+}
+
+function removeFromCart(cartId) {
+
+  if (autorization()) {
+    $.ajax({
+      url: "remove_product.php",
+      method: "POST",
+      data: {
+        id: cartId,
+      },
+      success: function(response) {
+        
+        window.location.href = "cart.php";
         console.log(response);
       },
       error: function(xhr, status, error) {

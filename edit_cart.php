@@ -10,7 +10,7 @@ $query = "SELECT c.id , c.product_id, p.name, c.user_id, c.quantity, c.final_pri
 $result = mysqli_query($conn, $query);
 
 if ($result) {
-  echo "<h2>Cart Table <a class = 'db_insert' href='insert_cart.php?table=cart'>Insert</a></h2>";
+  echo "<h2>Cart Table</h2>";
   echo "<table class='table'>";
   echo "<thead class='thead-dark'>";
   echo "<tr>";
@@ -20,7 +20,6 @@ if ($result) {
   echo "<th>User ID</th>";
   echo "<th>Quantity</th>";
   echo "<th>Final Price</th>";
-  echo "<th>Actions</th>";
   echo "</tr>";
   echo "</thead>";
   echo "<tbody>";
@@ -33,10 +32,6 @@ if ($result) {
     echo "<td>".$row['user_id']."</td>";
     echo "<td>".$row['quantity']."</td>";
     echo "<td>".$row['final_price']."</td>";
-    echo "<td>
-          <a href='update_cart.php?id=".$row['id']."'>Edit</a> | 
-          <a href='delete_cart.php?id=".$row['id']."'>Delete</a>
-          </td>";
     echo "</tr>";
   }
 

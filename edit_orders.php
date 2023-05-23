@@ -8,7 +8,7 @@ $query = "SELECT * FROM orders ;";
 $result = mysqli_query($conn, $query);
 
 if ($result) {
-  echo "<h2>Order Table <a class = 'db_insert' href='insert_order.php?table=order'>Insert</a></h2>";
+  echo "<h2>Orders Table </h2>";
   echo "<table class='table'>";
   echo "<thead class='thead-dark'>";
   echo "<tr>";
@@ -29,13 +29,12 @@ if ($result) {
     echo "<td>".$row['id']."</td>";
     echo "<td>".$row['user_id']."</td>";
     echo "<td>".$row['product_name']."</td>";
-    echo "<td>".$row['uantity']."</td>";
-    echo "<td>".$row['final_price']."</td>";
+    echo "<td>".$row['quantity']."</td>";
+    echo "<td>".$row['price']."</td>";
     echo "<td>".$row['order_date']."</td>";
     echo "<td>".$row['status']."</td>";
     echo "<td>
-          <a href='update_category.php?id=".$row['id']."'>Edit</a> | 
-          <a href='delete_category.php?id=".$row['id']."'>Delete</a>
+          <a href='update_order.php?id=".$row['id']."'>Edit</a> 
           </td>";
     echo "</tr>";
   }

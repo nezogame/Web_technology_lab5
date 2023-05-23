@@ -54,13 +54,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $result = $conn->query($query);
                 $row = mysqli_fetch_assoc($result);
 
-                echo '<script type="text/javascript">';
-                echo '    localStorage.setItem("authorized",true);';
-                echo '    localStorage.setItem("user_id", ' . $row['id'] . ');';
-                echo '    var name = "' . $name . '";';
-                echo '    var greeting = document.querySelector(".greeting");';
-                echo '    greeting.innerHTML = name;';
-                echo '</script>';
+                setcookie('authorized', true, time() + (86400 * 30), '/'); // Cookie will expire in 30 days
+                setcookie('email', $email, time() + (86400 * 30), '/'); // Cookie will expire in 30 days
+                setcookie('name', $name, time() + (86400 * 30), '/'); // Cookie will expire in 30 days
+                setcookie('user_id',  $row['id'], time() + (86400 * 30), '/'); // Cookie will expire in 30 days
+    
                 echo '<script type="text/javascript">';
                 echo '    window.location.href = "index.php";';
                 echo '</script>';

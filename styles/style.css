@@ -180,6 +180,7 @@ a.nav-link {
     font-weight: 700;
 }
 
+.advantages_item
 .title {
     text-transform: uppercase;
     font-family: Rubik-Medium;
@@ -807,8 +808,17 @@ color: inherit;
 }
 
 .db_insert{
+    align-content: center;
     margin-left: 15%;
+    padding: 5px 10px 7px;
+    border-radius: 15px;
     color:#061757 ;
+    background-image: linear-gradient(90deg,#f85118,#fb9c3e);
+}
+
+.db_insert:hover{
+    background: #061757;
+    color: #ffffff;
 }
 
 .insert_form,
@@ -964,4 +974,292 @@ color: inherit;
  .order_step .text {
     font-size: 19px;
     margin-bottom: 15px;
+}
+
+.cart-list-ttl {
+    font-family: Rubik-Light;
+    font-size: 17px;
+    padding: 45px 12px 15px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cart-list-ttl .product-title {
+    width: 20%;
+}
+
+.cart-list-ttl .product-price {
+    width: 55%;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    text-align: center;
+}
+
+.cart-list-ttl .product-price div {
+    width: 25%;
+}
+
+.cart-item-line {
+    background: #fff;
+    margin-bottom: 10px;
+    padding: 12px;
+    position: relative;
+}
+
+@media (min-width: 992px){
+    .cart-item-line {
+        min-height: 98px;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align: center;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+.cart-item-line.item-product .image-inner {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.cart-item-line .price-inner {
+    width: 55%;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    text-align: center;
+}
+
+.cart-item-line .quantity_block {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.cart-item-line .quantity_block button {
+    cursor: pointer;
+    font-family: Rubik-Medium;
+    font-size: 21px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #e5e5e5;
+}
+
+@media (max-width: 1199px){
+    .cart-item-line .quantity_block button {
+        font-size: 19px;
+    }
+}
+
+@media (max-width: 1199px){
+    .cart-item-line .quantity_block input {
+        width: 36px;
+        font-size: 19px;
+    }
+}
+
+.cart-item-line .remove-inner {
+    width: 8%;
+}
+
+.cart-item-line .remove-inner button {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background: #f2f2f2;
+    border: none;
+    transition: all .2s;
+}
+
+.cart-item-line 
+.remove-inner button:after, 
+.cart-item-line 
+.remove-inner button:before {
+    content: "";
+    display: block;
+    background: #666;
+    width: 2px;
+    height: 14px;
+    position: absolute;
+    top: 12px;
+    left: 17px;
+    transition: all .2s;
+}
+
+.cart-item-line .remove-inner button:after {
+    transform: rotate(-45deg);
+}
+
+.cart-item-line .remove-inner button:before {
+    transform: rotate(45deg);
+}
+
+.cart-item-line .quantity_block input {
+    width: 52px;
+    text-align: center;
+    background: 0 0;
+    border: none;
+    font-size: 21px;
+}
+
+.image-inner a img {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+
+.price-inner .title-inner,
+.price-inner .sum_block,
+.price-inner .price_block ,
+.price-inner .quantity-inner,
+.price-inner .sum_bloc{
+    width: 25%;
+    position: relative;
+}
+
+
+.cart-item-line .quantity_block button:hover {
+    border-color: #53a545;
+    background: #53a545;
+    color: #fff;
+}
+
+.cart-item-line .image-inner img {
+    width: 170px;
+    height: 98px;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+
+.total_sum {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 33px 6.5% 49px 15%;
+    margin-bottom: 9px;
+}
+
+.total_sum .text {
+    font-family: Rubik-Medium;
+    text-transform: uppercase;
+    font-size: 21px;
+}
+
+.total_sum .price {
+    font-family: Rubik-Medium;
+    font-size: 36px;
+    color: #53a545;
+}
+
+.total_sum .price .currency {
+    font-size: 16px;
+}
+
+.buttons_block{
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: center;
+    justify-content:center;
+    padding: 62px 12px 0 0;
+}
+
+.buttons_block .btn{
+    width: 257px;
+    margin: 0 auto;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    color: #53a545;
+    border: 2px solid #53a545;
+    background: 0 0;
+    cursor: pointer;
+}
+
+
+.continue_btn {
+    height: 60px;
+    border-radius: 60px;
+    font-family: Rubik-Medium;
+    font-size: 19px;
+    color: #fff;
+    box-sizing: border-box;
+    transition: all .2s;
+}
+
+.prev_btn{
+    height: 60px;
+    border-radius: 60px;
+    font-family: Rubik-Medium;
+    font-size: 19px;
+    box-sizing: border-box;
+    transition: all .2s;
+    background: #fff;
+    color: #53a545;
+}
+
+.buttons_block .btn {
+    width: auto;
+    min-width: 251px;
+    margin: 0 9px 50px;
+}
+
+.buttons_block .order_step_btn {
+    background: #53a545;
+    color: #fff;
+}
+
+.buttons_block .order_step_btn:hover {
+    background: #fff;
+    color: #53a545;
+}
+
+.order_steps .order_step.active .num, 
+.order_steps .order_step.checked .num {
+    background: #53a545;
+    border-color: #53a545;
+    color: #fff;
+}
+
+.insert_field .edit_text{ 
+    width: 150%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.remove-inner button:hover {
+    background: #de2917;
+}
+
+.remove-inner button:hover:after, 
+.cart-item-line 
+.remove-inner button:hover:before {
+    background: #fff;
 }

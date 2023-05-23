@@ -1,39 +1,4 @@
 
- <!-- header in top of the web site -->
-<?php include('php\header.php'); ?>
-
-
-<body>
-    <div class="block_title">Покупка</div>
-    <form class="contact_form" method = "POST" >
-        <div class ="form_content">
-            <div class="form_group group_email field">
-                <div class="form_validation">  </div>
-                <input class="form_field anonym_data_email" type="email" name="email" value="" data_ph="E-mail" onkeydown="if(event.keyCode==13){return false;}" placeholder="E-mail" data_gtm_form_interact_field_id="5" >
-            </div>
-            <div class="form_group group_phone field">
-                <div class="form_validation"> </div>
-                <input class="form_field phone" type="tel" name="phone" placeholder="+38 " data_ph="+38" onkeydown="if(event.keyCode==13){return false;}" maxlength="19">
-            </div>                                
-            <div class="form_group group_card_number field">
-                <div class="form_validation"> </div>
-                <input class="form_field anonym_data_name _success" type="text" name="card_number" value="" data_ph="Номер картки" onkeydown="if(event.keyCode==13){return false;}" placeholder="Номер картки" data_gtm_form_interact_field_id="6">
-            </div>
-            <div class="form_group group_card_date field">
-                <div class="form_validation"> </div>
-                <input class="form_field _success" type="text" name="card_date" placeholder="xx/xx" data_ph="card_date" onkeydown="if(event.keyCode==13){return false;}">
-            </div>
-            <div class="form_group group_CVV field">
-                <div class="form_validation"> </div>
-                <input class="form_field" type="text" name="CVV" placeholder="CVV" data_ph="CVV" onkeydown="if(event.keyCode==13){return false;}">
-            </div>
-           
-
-        <div class ="buttons_blok">
-            <button class="submit_btn" name ="submit_button">Продовжити</button>
-        </div>  
-    </form>
-    </div >
     <?php
     
     
@@ -91,50 +56,7 @@
         }else{
             $errors['card_date'] = 'Будь ласка, введіть дату вашої картки';
         }
-
-        if (count($errors) == 0) {
-            echo '-----ВСЕ ГАРАЗД-----<br/>';
-            $valid = array_fill_keys(['one','two'],50);
-            print_r($valid);
-            echo "<br/>";
-            print ('-----1-----');
-            echo "<br/>";
-            $valid = array_change_key_case($valid, CASE_UPPER);    
-            print_r($valid);
-            echo "<br/>";
-            print ('-----2-----');
-            echo "<br/>";
-            $key = array_search(50,$valid);
-            print($key);
-            echo "<br/>";
-            print ('-----3-----');
-            echo "<br/>";
-            $valid=array_flip($valid);
-            print_r($valid);
-            echo "<br/>";
-            print ('-----4-----');
-            echo "<br/>";
-            array_push( $valid, 'three', 45, 13, 11 );
-            print_r($valid);
-            echo "<br/>";
-            print ('-----5-----');
-            echo "<br/>";
-            $color=array("red","green","blue","yellow","brown");
-            echo "orriginal aaray:";
-            print_r($color);
-            echo "<br/>modifaed aaray:";
-            print_r(array_slice($color,2));
-            
-        } else {
-            // Если ошибки есть, выведем сообщения об ошибках
-            foreach ($errors as $error) {
-                $count = strlen($error);
-                echo "$error; ";
-                echo "<br/>";
-                print "довжина рядка $count \n";
-                echo "<br/>";
-            }
-        }
+        echo json_encode($errors);
     }
+    
     ?>
-<?php include('php\footer.php'); ?>
